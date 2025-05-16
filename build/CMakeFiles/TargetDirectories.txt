@@ -1,5 +1,0 @@
-/home/u03n0/Workspace/naive_bays_cpp/build/CMakeFiles/naive_bayes_cpp.dir
-/home/u03n0/Workspace/naive_bays_cpp/build/CMakeFiles/mylib.dir
-/home/u03n0/Workspace/naive_bays_cpp/build/CMakeFiles/algo_lib.dir
-/home/u03n0/Workspace/naive_bays_cpp/build/CMakeFiles/edit_cache.dir
-/home/u03n0/Workspace/naive_bays_cpp/build/CMakeFiles/rebuild_cache.dir

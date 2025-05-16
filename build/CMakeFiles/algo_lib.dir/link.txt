@@ -1,2 +1,0 @@
-/usr/bin/ar qc libalgo_lib.a CMakeFiles/algo_lib.dir/src/algo.cpp.o
-/usr/bin/ranlib libalgo_lib.a

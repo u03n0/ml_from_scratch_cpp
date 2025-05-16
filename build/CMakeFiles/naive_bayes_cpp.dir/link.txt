@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/naive_bayes_cpp.dir/src/main.cpp.o -o naive_bayes_cpp  libmylib.a libalgo_lib.a 
