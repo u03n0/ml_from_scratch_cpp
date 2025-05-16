@@ -129,6 +129,56 @@ naive_bayes_cpp/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/naive_bayes_cpp.dir/build.make CMakeFiles/naive_bayes_cpp.dir/build
 .PHONY : naive_bayes_cpp/fast
 
+#=============================================================================
+# Target rules for targets named mylib
+
+# Build rule for target.
+mylib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 mylib
+.PHONY : mylib
+
+# fast build rule for target.
+mylib/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/build
+.PHONY : mylib/fast
+
+#=============================================================================
+# Target rules for targets named algo_lib
+
+# Build rule for target.
+algo_lib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 algo_lib
+.PHONY : algo_lib
+
+# fast build rule for target.
+algo_lib/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/algo_lib.dir/build.make CMakeFiles/algo_lib.dir/build
+.PHONY : algo_lib/fast
+
+src/algo.o: src/algo.cpp.o
+.PHONY : src/algo.o
+
+# target to build an object file
+src/algo.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/algo_lib.dir/build.make CMakeFiles/algo_lib.dir/src/algo.cpp.o
+.PHONY : src/algo.cpp.o
+
+src/algo.i: src/algo.cpp.i
+.PHONY : src/algo.i
+
+# target to preprocess a source file
+src/algo.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/algo_lib.dir/build.make CMakeFiles/algo_lib.dir/src/algo.cpp.i
+.PHONY : src/algo.cpp.i
+
+src/algo.s: src/algo.cpp.s
+.PHONY : src/algo.s
+
+# target to generate assembly for a file
+src/algo.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/algo_lib.dir/build.make CMakeFiles/algo_lib.dir/src/algo.cpp.s
+.PHONY : src/algo.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -153,6 +203,30 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/naive_bayes_cpp.dir/build.make CMakeFiles/naive_bayes_cpp.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/processing.o: src/processing.cpp.o
+.PHONY : src/processing.o
+
+# target to build an object file
+src/processing.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/processing.cpp.o
+.PHONY : src/processing.cpp.o
+
+src/processing.i: src/processing.cpp.i
+.PHONY : src/processing.i
+
+# target to preprocess a source file
+src/processing.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/processing.cpp.i
+.PHONY : src/processing.cpp.i
+
+src/processing.s: src/processing.cpp.s
+.PHONY : src/processing.s
+
+# target to generate assembly for a file
+src/processing.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/processing.cpp.s
+.PHONY : src/processing.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -161,10 +235,18 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... algo_lib"
+	@echo "... mylib"
 	@echo "... naive_bayes_cpp"
+	@echo "... src/algo.o"
+	@echo "... src/algo.i"
+	@echo "... src/algo.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/processing.o"
+	@echo "... src/processing.i"
+	@echo "... src/processing.s"
 .PHONY : help
 
 

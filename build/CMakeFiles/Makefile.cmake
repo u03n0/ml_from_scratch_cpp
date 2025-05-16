@@ -44,4 +44,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/naive_bayes_cpp.dir/DependInfo.cmake"
+  "CMakeFiles/mylib.dir/DependInfo.cmake"
+  "CMakeFiles/algo_lib.dir/DependInfo.cmake"
   )

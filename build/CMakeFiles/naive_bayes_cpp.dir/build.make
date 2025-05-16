@@ -92,6 +92,8 @@ naive_bayes_cpp_EXTERNAL_OBJECTS =
 
 naive_bayes_cpp: CMakeFiles/naive_bayes_cpp.dir/src/main.cpp.o
 naive_bayes_cpp: CMakeFiles/naive_bayes_cpp.dir/build.make
+naive_bayes_cpp: libmylib.a
+naive_bayes_cpp: libalgo_lib.a
 naive_bayes_cpp: CMakeFiles/naive_bayes_cpp.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/u03n0/Workspace/naive_bays_cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable naive_bayes_cpp"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/naive_bayes_cpp.dir/link.txt --verbose=$(VERBOSE)

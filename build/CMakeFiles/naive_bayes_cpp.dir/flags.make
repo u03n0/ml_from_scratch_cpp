@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I/home/u03n0/Workspace/naive_bays_cpp/include
 
 CXX_FLAGS = 
 
