@@ -55,7 +55,7 @@ NaiveBayes::NaiveBayes(int a) {
         for (const auto& entry : dict) {
           const vector<string>& value = entry.second;
           for (const auto& word : value) {
-            histogram_map[remove_punctuation(lower_str(word))]++;
+            histogram_map[word]++;
           }
         }
       }
