@@ -10,20 +10,22 @@
 using std::vector;
 using std::unordered_map;
 using std::string;
-using vec_of_vec_str_map = vector<unordered_map<string, vector<string>>>; 
+using vec_of_str_map = vector<unordered_map<string, string>>; 
 
 
 int main() {
 
  string filename = std::string(DATA_DIR) + "email.csv";
- vec_of_vec_str_map data;
- data = parseCSV(filename);
- vec_of_vec_str_map train_data, test_data;
+ vec_of_str_map data;
+ data = read_csv(filename);
+ /*
+ vec_of_str_map train_data, test_data;
  std::tie(train_data, test_data) = train_test_split(data, 0.8);
 
  NaiveBayes nb;
  nb.fit(train_data);
  int correct {nb.predict(test_data)};
  std::cout << "Accuracy: " << (double) correct / test_data.size() << "%" << std::endl;
+ */
   return 0;
 } 

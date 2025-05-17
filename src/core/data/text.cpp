@@ -22,7 +22,7 @@ string lower_str(string str) {
   return lowered;
 }
 
-string remove_punctuation(const string& word) {
+string remove_punctuation(string& word) {
   string cleaned_word {word};
   cleaned_word.erase(cleaned_word.begin(),
       std::find_if(cleaned_word.begin(), 
@@ -54,4 +54,33 @@ string cleanWord(const string& word) {
         }
     }
     return cleanedWord;
+}
+
+vector<string> tokenizer(const string& s) {
+     vector<string> words;
+     std::stringstream ss(s);
+     string word;
+            
+     while (ss >> word) {
+        // Clean the word: remove punctuation, remove numbers, and convert to lowercase
+        word = cleanWord(word);
+
+        // Add the word to the list if it's not empty       
+        if (!word.empty()) {
+            words.push_back(lower_str(word));
+                }
+            }
+     return words;
+}
+vector<unordered_map<string, vector<string>>> tokenize_dataset(const vector<unordered_map<string, string>> data){
+  vector<unordered_map<string, vector<string>>> result;
+  for (const auto& dict : data) {
+    unordered_map<string, vector<string>> temp_dict;
+    for (const auto& it : dict) {
+      temp_dict[it.first] = tokenizer(it.second);
+      result.push_back(temp_dict);
+    }
+  }
+
+  return result;
 }
