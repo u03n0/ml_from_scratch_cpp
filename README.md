@@ -12,14 +12,14 @@ The name says it all.
 
 ## running models
 1. after successfully building, stay (or go back to) `build/`
-2. `./src/model_name_app` replacing `model_name_app` with avialable models (see below)
+2. run `./src/model_name_app` replacing `model_name_app` with avialable models (see below)
 
 ## models available
 1. `naive_bayes_app`
 
 ## Plan
-| Model | Status |
-| --- | --- |
+| Model | Status | Name | Command |
+| --- | --- | --- | --- |
 | KNN |:hammer:|
-| NaiveBayes |:white_check_mark:| 
+| NaiveBayes |:white_check_mark:| naive_bayes_app | `./src/naive_bayes_app`|
 | LinearRegression | 📆: |
