@@ -9,7 +9,9 @@ add_library(core_data
 add_library(models_bayesian
     models/bayesian/naive_bayes.cpp
 )
-
+add_library(models_knn
+    models/knn/knn.cpp
+)
 # Link dependencies - bayesian models need core data functionality
 target_link_libraries(models_bayesian PRIVATE core_data)
 
