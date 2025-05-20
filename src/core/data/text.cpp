@@ -4,8 +4,8 @@
 #include <algorithm>
 #include <fstream>
 #include <sstream>
-#include "ml_from_scratch_cpp/core/data/text.h"
-#include "ml_from_scratch_cpp/core/data/reading.h"
+#include "core/data/text.h"
+#include "core/data/reading.h"
 
 
 using std::vector;
