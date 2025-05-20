@@ -8,14 +8,13 @@
 using std::vector;
 using std::string;
 using std::unordered_map;
-using vec_of_str_map = vector<unordered_map<string, string>>;
 
-
+typedef vector<unordered_map<string, string>> str_omap_vector_t;
 /**
  * Parses a CSV file 
  * @param filename The full path name of the csv file
  * @return a vector of maps (string vector<string>)
 */
-vec_of_str_map read_csv(const string& filename);
+str_omap_vector_t read_csv(const string& filename);
 
 #endif // READING_H
