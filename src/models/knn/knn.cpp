@@ -1,9 +1,9 @@
-#include <vector>
-#include <string>
-#include <unordered_map>
+//#include <vector>
+//#include <string>
+//#include <unordered_map>
 #include <cmath>
 #include <algorithm>
-#include "ml_from_scratch_cpp/models/knn/knn.h"
+#include "models/knn/knn.h"
 
 
 KNN::KNN(int x) {  

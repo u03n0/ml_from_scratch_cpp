@@ -1,8 +1,8 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
-#include "ml_from_scratch_cpp/models/bayesian/naive_bayes.h"
-#include "ml_from_scratch_cpp/core/data/text.h"
+#include "models/bayesian/naive_bayes.h"
+#include "core/data/text.h"
 
 
 NaiveBayes::NaiveBayes(int a) {
@@ -11,7 +11,7 @@ NaiveBayes::NaiveBayes(int a) {
       correct = 0;
     }
     
-    void NaiveBayes::fit(vec_of_vec_str_map x) {
+    void NaiveBayes::fit(dataset_vec_str_t x) {
       train_data = x;
       for (const auto& dict : train_data) {
         if (dict.find("ham") != dict.end()) {
@@ -30,7 +30,7 @@ NaiveBayes::NaiveBayes(int a) {
       num_spam_words = vocabulary_counter(spam_histogram);
     }
 
-    int NaiveBayes::predict(vec_of_vec_str_map x) { 
+    int NaiveBayes::predict(dataset_vec_str_t x) { 
       test_data = x;
       for (const auto& email : test_data) {
         for (const auto& pair : email) {
@@ -48,8 +48,8 @@ NaiveBayes::NaiveBayes(int a) {
       return correct;
     }
     
-    unordered_map<string, int> NaiveBayes::build_histogram(vec_of_vec_str_map x) {
-      vec_of_vec_str_map data {x};
+    unordered_map<string, int> NaiveBayes::build_histogram(dataset_vec_str_t x) {
+      dataset_vec_str_t data {x};
       unordered_map<string, int> histogram_map;
       for (unordered_map<string, vector<string>> dict : data) {
         for (const auto& entry : dict) {
