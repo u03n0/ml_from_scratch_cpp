@@ -1,7 +1,6 @@
 # Define the core data library
 add_library(core_data
     core/data/reading.cpp
-    core/data/splitting.cpp
     core/data/text.cpp
     core/encoding/text_terms.cpp
 )
