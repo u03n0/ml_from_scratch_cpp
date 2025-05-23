@@ -14,19 +14,26 @@ using std::string;
 typedef vector<unordered_map<string, string>> str_omap_vector_t;
 typedef vector<unordered_map<string, vector<string>>> dataset_vec_str_t;
 
+
+
 int main() {
 
  string filename = std::string(DATA_DIR) + "email.csv";
- str_omap_vector_t data;
+ vector<vector<string>> data;
  data = read_csv(filename);
- dataset_vec_str_t processed = tokenize_dataset(data);
+ //`data.erase(data.begin());
+auto [X, y] = split_x_y(data, "Category");
 
- auto[train_data, test_data] = train_test_split(processed, 0.8);
 
+ vector<vector<string>> processed = tokenize_dataset(X);
+
+ auto[X_train, y_train, X_test, y_test] = train_test_split(X, y, 0.8);
+
+/*
  NaiveBayes nb;
  nb.fit(train_data);
  int correct {nb.predict(test_data)};
  std::cout << "Accuracy: " << (double) correct / test_data.size() << "%" << std::endl;
- 
+ */
   return 0;
 } 

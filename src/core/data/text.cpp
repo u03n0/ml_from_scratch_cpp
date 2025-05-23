@@ -39,7 +39,7 @@ string remove_punctuation(string& word) {
         }).base(),
       cleaned_word.end()
       );
-  return cleaned_word;
+  return lower_str(cleaned_word);
 }
 
 string cleanWord(const string& word) {
@@ -67,18 +67,22 @@ vector<string> tokenizer(const string& s) {
 
         // Add the word to the list if it's not empty       
         if (!word.empty()) {
-            words.push_back(lower_str(word));
+            words.push_back(word);
                 }
             }
      return words;
 }
-vector<unordered_map<string, vector<string>>> tokenize_dataset(const vector<unordered_map<string, string>> data){
-  vector<unordered_map<string, vector<string>>> result;
-  for (const auto& dict : data) {
-    unordered_map<string, vector<string>> temp_dict;
-    for (const auto& it : dict) {
-      temp_dict[it.first] = tokenizer(it.second);
-      result.push_back(temp_dict);
+vector<vector<string>> tokenize_dataset(const vector<vector<string>> data){
+  vector<vector<string>> result;
+  for (const auto& row : data) {
+    for (const auto& col : row) {
+      std::stringstream ss(col);
+      string word;
+      vector<string> words;
+      while (ss >> word) {
+        words.push_back(lower_str(remove_punctuation(word)));
+      }
+      result.push_back(words);
     }
   }
 

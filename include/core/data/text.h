@@ -12,6 +12,6 @@ using std::vector;
 string lower_str(string str);
 string remove_punctuation(const string& word);
 string cleanWord(const string& word);
-vector<unordered_map<string, vector<string>>> tokenize_dataset(const vector<unordered_map<string, string>> data);
+vector<vector<string>> tokenize_dataset(const vector<vector<string>> data);
 
 #endif // TEXT_H

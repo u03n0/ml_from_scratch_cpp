@@ -11,7 +11,7 @@ NaiveBayes::NaiveBayes(int a) {
       correct = 0;
     }
     
-    void NaiveBayes::fit(dataset_vec_str_t x) {
+    void NaiveBayes::fit(vector<vector<string>> X) {
       train_data = x;
       for (const auto& dict : train_data) {
         if (dict.find("ham") != dict.end()) {
