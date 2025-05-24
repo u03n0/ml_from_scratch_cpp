@@ -8,7 +8,7 @@ using std::string;
 using std::unordered_map;
 
 typedef vector<unordered_map<string, vector<double>>> dataset_vec_double_t;
-
+/*
 LinearRegression::LinearRegression(double x, int y)
   : lr(x), num_iters(y), bias(0.0) {}
 
@@ -74,7 +74,7 @@ void LinearRegression::fit(dataset_vec_double_t& dataset){
         bias -= lr * bias_grad;
     }
 }
-vector<double> LinearRegression::predict(const vector<vector<double>>&  X) {
+vector<double> LinearRegression::predict(const vector<vector<double>>& X) {
     vector<double> predictions;
     predictions.reserve(X.size());
     
@@ -91,3 +91,4 @@ vector<double> LinearRegression::predict(const vector<vector<double>>&  X) {
     
     return predictions;
 }
+*/

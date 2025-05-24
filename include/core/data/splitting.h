@@ -64,10 +64,10 @@ std::pair<vector<vector<string>>, vector<string>> split_x_y(const vector<vector<
     
     int idx = get_label_index(data, label);
     if (idx == -1) {
-        // Label not found, return empty vectors
         return std::make_pair(X, y);
     }
     
+    // Start from row 1 (skip header) and go to the end
     for (size_t row = 1; row < data.size(); ++row) {
         // Store the y value
         y.push_back(data[row][idx]);
@@ -81,11 +81,6 @@ std::pair<vector<vector<string>>, vector<string>> split_x_y(const vector<vector<
         }
         X.push_back(x_row);
     }
-    
     return std::make_pair(X, y);
 }
-
-
-
-// Splits text on a deliminator
 #endif

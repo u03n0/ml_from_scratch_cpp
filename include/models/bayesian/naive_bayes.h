@@ -14,7 +14,7 @@ class NaiveBayes {
 public:
     double ham_proba, spam_proba, product_ham, product_spam;
     int num_ham_words, num_spam_words, len_ham, correct, alpha;
-    dataset_vec_str_t ham_data, spam_data, train_data, test_data;
+    vector<vector<string>> ham_data, spam_data;
     unordered_map<string, int> ham_histogram, spam_histogram;
     vector<string> y_hat, y;
     
@@ -22,10 +22,10 @@ public:
     NaiveBayes(int a=1);
     
     // Training method
-    void fit(dataset_vec_str_t x);
+    void fit(vector<vector<string>> X, vector<string> y);
     
     // Prediction method
-    int predict(dataset_vec_str_t x); 
+    int predict(vector<vector<string>> X, vector<string> y); 
 
     // Product computer method
     double compute_product(vector<string> x,
@@ -38,7 +38,7 @@ public:
     int vocabulary_counter(unordered_map<string, int> x);
 
     // Histogram builder method
-    unordered_map<string, int> build_histogram(dataset_vec_str_t x);
+    unordered_map<string, int> build_histogram(vector<vector<string>> X);
 };
 
 #endif // NAIVE_BAYES_H

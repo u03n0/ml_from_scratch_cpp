@@ -5,85 +5,107 @@
 #include <cmath>
 #include <set>
 
-
 using std::vector;
 using std::unordered_map;
 using std::string;
 using std::set;
 
-
-double tf(string term, vector<string> document) {
-  int n = document.size();
-  int freq {0};
-  for (const string& word : document) {
-      if (word == term){
-        freq++;
-      }
-    }
-    return freq / n ? n : 0;
-}
-
-
-double idf(string term, vector<unordered_map<string, vector<string>>> corpus) {
-  int n = corpus.size();
-  int count {0};   
-  for (const unordered_map<string, vector<string>>& doc : corpus) {
-    for (const auto& pair : doc) {
-      if (std::find(pair.second.begin(), pair.second.end(), term) == pair.second.end()) {
-        count++;
-        break;
-      }
-    }
-  }
-  
-    if (count == 0) {
-           return 0;
-    }
-
-    return std::log((n + 1) / (count + 1)) + 1;
-    }
-
-set<string> get_vocab(vector<unordered_map<string, vector<string>>> corpus) {
-  set<string> vocab;
-    for (const unordered_map<string, vector<string>>& doc : corpus) {
-         for (const auto& pair : doc) {
-            for (const string& term : pair.second) {
-                vocab.insert(term);
-            }
-         }
-    }
-    return vocab;
-}
-
-
-vector<unordered_map<string, vector<double>>> get_tf_idf(vector<unordered_map<string, vector<string>>> corpus) {
-
-  set<string> vocab_set = get_vocab(corpus); // a set of all terms in corpus (a vocabulary)
-  vector<string> vocab(vocab_set.begin(), vocab_set.end()); // converted to a vector
-  int vocab_len = vocab.size(); // used to build a vector of 0s
-  unordered_map<string , double> term_idfs; // track the idf for all terms in vocab
-  for (const string& term : vocab) {
-    term_idfs[term] = idf(term, corpus); // store the term and its idf
-  }
-  // second part
-  vector<unordered_map<string, vector<double>>> results;
-  for (const unordered_map<string, vector<string>>& doc : corpus) { // for every doc in corpus
-    unordered_map<string, int> term_freq; // to store tf 
-    vector<double> vec(vocab_len, 0.0); // a vector intialized to 0 * length of vocab
-    for (const auto& pair : doc){ // for every key, value pair in each document
-      string label = pair.first; // our label is the key
-      for (const string& term : pair.second) {
-        term_freq[term] = tf(term, pair.second); // store term and its tf for that document
+// Optimized TF-IDF implementation
+vector<vector<double>> get_tf_idf_optimized(const vector<vector<string>>& corpus) {
+    if (corpus.empty()) return {};
+    
+    // Build vocabulary and document frequency in one pass
+    set<string> vocab_set;
+    unordered_map<string, int> doc_freq; // How many documents contain each term
+    
+    for (const auto& doc : corpus) {
+        set<string> unique_terms(doc.begin(), doc.end()); // Unique terms in this doc
+        for (const auto& term : unique_terms) {
+            vocab_set.insert(term);
+            doc_freq[term]++;
+        }
     }
     
-    for (int i = 0; i < vocab_len; i++){
-      string term = vocab[i]; // get the ith term in the vocab
-      vec[i] = term_freq[term] * term_idfs[term]; // update ith item in vector with the tf-idf of the ith term
+    vector<string> vocab(vocab_set.begin(), vocab_set.end());
+    int vocab_size = vocab.size();
+    int num_docs = corpus.size();
+    
+    // Pre-compute IDF values
+    unordered_map<string, double> idf_values;
+    for (const auto& term : vocab) {
+        if (doc_freq[term] > 0) {
+            idf_values[term] = std::log(static_cast<double>(num_docs) / doc_freq[term]);
+        } else {
+            idf_values[term] = 0.0;
+        }
     }
-    unordered_map<string, vector<double>> res;
-    res[label] = vec;
-    results.push_back(res);
-  }
-  }
-    return results;
-  }
+    
+    // Create TF-IDF vectors
+    vector<vector<double>> tfidf_matrix;
+    tfidf_matrix.reserve(num_docs);
+    
+    for (const auto& doc : corpus) {
+        // Count term frequencies in this document
+        unordered_map<string, int> term_count;
+        for (const auto& term : doc) {
+            term_count[term]++;
+        }
+        
+        // Create TF-IDF vector for this document
+        vector<double> tfidf_vec(vocab_size, 0.0);
+        int doc_length = doc.size();
+        
+        if (doc_length > 0) {
+            for (int i = 0; i < vocab_size; ++i) {
+                const string& term = vocab[i];
+                if (term_count.count(term)) {
+                    double tf = static_cast<double>(term_count[term]) / doc_length;
+                    tfidf_vec[i] = tf * idf_values[term];
+                }
+            }
+        }
+        
+        tfidf_matrix.push_back(std::move(tfidf_vec));
+    }
+    
+    return tfidf_matrix;
+}
+
+// Alternative: Simpler bag-of-words for faster processing
+vector<vector<double>> get_bag_of_words(const vector<vector<string>>& corpus) {
+    if (corpus.empty()) return {};
+    
+    // Build vocabulary
+    set<string> vocab_set;
+    for (const auto& doc : corpus) {
+        for (const auto& term : doc) {
+            vocab_set.insert(term);
+        }
+    }
+    
+    vector<string> vocab(vocab_set.begin(), vocab_set.end());
+    int vocab_size = vocab.size();
+    
+    // Create feature vectors
+    vector<vector<double>> feature_matrix;
+    feature_matrix.reserve(corpus.size());
+    
+    for (const auto& doc : corpus) {
+        unordered_map<string, int> term_count;
+        for (const auto& term : doc) {
+            term_count[term]++;
+        }
+        
+        vector<double> feature_vec(vocab_size, 0.0);
+        for (int i = 0; i < vocab_size; ++i) {
+            const string& term = vocab[i];
+            if (term_count.count(term)) {
+                feature_vec[i] = static_cast<double>(term_count[term]);
+            }
+        }
+        
+        feature_matrix.push_back(std::move(feature_vec));
+    }
+    
+    return feature_matrix;
+}

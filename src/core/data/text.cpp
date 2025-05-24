@@ -75,16 +75,12 @@ vector<string> tokenizer(const string& s) {
 vector<vector<string>> tokenize_dataset(const vector<vector<string>> data){
   vector<vector<string>> result;
   for (const auto& row : data) {
+    vector<string> row_words;
     for (const auto& col : row) {
-      std::stringstream ss(col);
-      string word;
-      vector<string> words;
-      while (ss >> word) {
-        words.push_back(lower_str(remove_punctuation(word)));
-      }
-      result.push_back(words);
+      auto col_words = tokenizer(col);
+      row_words.insert(row_words.end(), col_words.begin(), col_words.end());
     }
+    result.push_back(row_words);
   }
-
   return result;
 }

@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
-
+/*
 using std::vector;
 using std::string;
 using std::unordered_map;
@@ -26,6 +26,6 @@ public:
                                   vector<double>& y); 
     vector<double> predict(const vector<vector<double>>& X);
 };
-
+*/
 #endif // !LR_H
 

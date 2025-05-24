@@ -13,26 +13,27 @@ using std::vector;
 using std::unordered_map;
 using std::string;
 
-typedef vector<unordered_map<string, string>> str_omap_vector_t;
-typedef vector<unordered_map<string, vector<string>>> dataset_vec_str_t;
-typedef vector<unordered_map<string, vector<double>>> dataset_vec_double_t;
 
 int main() {
 
  string filename = string(DATA_DIR) + "wage_predict.csv";
  vector<vector<string>> data;
  data = read_csv(filename);
- display_csv(data);
-
  /*
- dataset_vec_str_t processed = tokenize_dataset(data);
- dataset_vec_double_t encoded_data;
- encoded_data = get_tf_idf(processed);
+ auto [X, y] =  split_x_y(data, "monthly_salary");
+ std::cout << X.size() << std::endl;
+ */
+ for (const vector<string>& row : data) {
+   for (const string& word : row) {
+     std::cout << word << std::endl;
+   }
+ }
+ /*
+ auto [X_train, y_train, X_test, y_test] = train_test_split(X, y, 0.8);
 
- auto [train_data, test_data] = train_test_split(encoded_data, 0.8);
 
  LinearRegression lr(0.001, 50);
- lr.fit(train_data);
+ lr.fit(X_train);
  */
  return 0; 
 }

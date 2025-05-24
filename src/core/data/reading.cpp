@@ -51,6 +51,7 @@ vector<vector<string>> read_csv(const string& filename) {
     }
 
     file.close(); // Close the file
+    data.pop_back();
     return data; // Return the 2D vector containing all rows and columns
 }
 
