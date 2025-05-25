@@ -2,6 +2,11 @@
 #include <vector>
 #include <unordered_map>
 #include <set>
+
+using std::string;
+using std::vector;
+
+
 std::vector<std::vector<double>> one_hot_encoding(const std::vector<std::vector<std::string>>& x) {
     // Step 1: Collect all unique values across all rows
     std::set<std::string> feature_values;
@@ -33,4 +38,4 @@ std::vector<std::vector<double>> one_hot_encoding(const std::vector<std::vector<
     
     return matrix;
 }
-p
+

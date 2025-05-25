@@ -3,6 +3,7 @@ add_library(core_data
     core/data/reading.cpp
     core/data/text.cpp
     core/encoding/text_terms.cpp
+    core/encoding/features.cpp
 )
 
 # Define the bayesian models library

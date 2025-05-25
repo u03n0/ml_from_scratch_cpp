@@ -8,10 +8,10 @@ using std::string;
 using std::unordered_map;
 
 typedef vector<unordered_map<string, vector<double>>> dataset_vec_double_t;
-/*
+
 LinearRegression::LinearRegression(double x, int y)
   : lr(x), num_iters(y), bias(0.0) {}
-
+/*
 void LinearRegression::extractFeaturesAndLabels(const dataset_vec_double_t& dataset, 
                                   vector<vector<double>>& X, 
                                   vector<double>& y) {
@@ -29,11 +29,11 @@ void LinearRegression::extractFeaturesAndLabels(const dataset_vec_double_t& data
             }
         }
     }
-void LinearRegression::fit(dataset_vec_double_t& dataset){
-  vector<vector<double>> X;
-  vector<double> y;
+*/ 
+void LinearRegression::fit(vector<vector<double>>& X, vector<double>& y){
+
   // Convert dataset to X (features) and y (labels)
-  extractFeaturesAndLabels(dataset, X, y);
+  //extractFeaturesAndLabels(dataset, X, y);
   size_t num_samples = X.size();
   size_t num_features = X[0].size();
   // Initialize weights to zero
@@ -91,4 +91,4 @@ vector<double> LinearRegression::predict(const vector<vector<double>>& X) {
     
     return predictions;
 }
-*/
+
