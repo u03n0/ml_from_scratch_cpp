@@ -8,22 +8,22 @@ using std::vector;
 using std::string;
 using std::unordered_map;
 
-typedef vector<unordered_map<string, vector<double>>> str_db_pairList_t;
 
 // A class to represent a basic KNN model
 
 class KNN {
 public:
   int k;
-  str_db_pairList_t points;
+  vector<vector<double>> points;
+  vector<string> labels;
   // Constructor
   KNN(int k=3);
   
   // Training method
-  void fit(str_db_pairList_t x);
+  void fit(vector<vector<double>> X, vector<string> y);
     
   // Prediction method
-  int predict(str_db_pairList_t x); 
+  int predict(vector<vector<double>> X, vector<string> y); 
 
   // classify 
   string classify_point(vector<double> x);

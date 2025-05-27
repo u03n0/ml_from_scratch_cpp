@@ -14,7 +14,6 @@ using std::unordered_map;
 
 typedef vector<unordered_map<string, string>> str_omap_vector_t;
 
-
 vector<string> parse_csv_row(const string& row) {
   vector<string> fields;
   string field;
@@ -35,23 +34,33 @@ vector<string> parse_csv_row(const string& row) {
     return fields;
 }
 
+vector<vector<string>> read_csv(const string& filename) {
+    std::ifstream file(filename); // Open the file
+    string line;
+    vector<vector<string>> data; // To store rows of the CSV file
 
-str_omap_vector_t read_csv(const string& filename) {
-  str_omap_vector_t data;
-  std::ifstream file(filename);
-  if (!file.is_open()) {
-    std::cerr << "Failed to open file: " << filename << std::endl;
-    return data;
-  }
+    if (!file.is_open()) {
+        std::cerr << "Error opening file!" << std::endl;
+        return data; // Return empty vector on error
+    }
 
-  string line;
-  while (std::getline(file, line)) {
-    vector<string> sentence = parse_csv_row(line);
-    unordered_map<string, string> dict;
-    dict[sentence.front()] = sentence.back(); 
-    data.push_back(dict);
-  }
+    // Loop through each row in the CSV file
+    while (std::getline(file, line)) {
+        vector<string> row = parse_csv_row(line);
+        data.push_back(row);
+    }
 
-  file.close();
-  return data;
+    file.close(); // Close the file
+    data.pop_back();
+    return data; // Return the 2D vector containing all rows and columns
+}
+
+
+void display_csv(const vector<vector<string>>& data) {
+    for (const auto& row : data) {
+        for (const auto& column : row) {
+            std::cout << column << " ";
+        }
+        std::cout << std::endl;
+    }
 }

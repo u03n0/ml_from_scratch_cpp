@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <cmath>
 #include <set>
-
+#include "core/encoding/text_terms.h"
 
 using std::vector;
 using std::unordered_map;
@@ -12,78 +12,53 @@ using std::string;
 using std::set;
 
 
-double tf(string term, vector<string> document) {
-  int n = document.size();
-  int freq {0};
-  for (const string& word : document) {
-      if (word == term){
-        freq++;
-      }
-    }
-    return freq / n ? n : 0;
-}
-
-
-double idf(string term, vector<unordered_map<string, vector<string>>> corpus) {
-  int n = corpus.size();
-  int count {0};   
-  for (const unordered_map<string, vector<string>>& doc : corpus) {
-    for (const auto& pair : doc) {
-      if (std::find(pair.second.begin(), pair.second.end(), term) == pair.second.end()) {
-        count++;
-        break;
-      }
-    }
-  }
-  
-    if (count == 0) {
-           return 0;
-    }
-
-    return std::log((n + 1) / (count + 1)) + 1;
-    }
-
-set<string> get_vocab(vector<unordered_map<string, vector<string>>> corpus) {
+vector<vector<double>> tf_idf(vector<vector<string>> data) {
+  // build vocabulary and get histograms for each document
   set<string> vocab;
-    for (const unordered_map<string, vector<string>>& doc : corpus) {
-         for (const auto& pair : doc) {
-            for (const string& term : pair.second) {
-                vocab.insert(term);
-            }
-         }
+  unordered_map<string, int> idfs;
+  vector<unordered_map<string, int>> corpus_histo;
+  
+
+  for (const vector<string>& sub : data) {
+    unordered_map<string, int> doc_histo;
+    for (const string& term : sub) {
+      vocab.insert(term);
+      doc_histo[term]++;
     }
-    return vocab;
+    corpus_histo.push_back(doc_histo);
+  }
+
+  //  Initialize a Matrix with zeros
+  size_t len_data = data.size();
+  size_t len_vocab = vocab.size();
+
+  vector<vector<double>> matrix(len_data, vector<double>(len_vocab, 0.0));
+
+  // Build IDFs now
+  for (string term: vocab) {
+    for (const unordered_map<string, int>& d_histo : corpus_histo) {
+      if (d_histo.find(term) != d_histo.end()) {
+        idfs[term]++;
+      }
+    }
+  }
+
+  vector<string> vocab_vec(vocab.begin(), vocab.end()); // convert set to vector
+  
+  // Populate Matrix with TF * IDF product
+  for (size_t i = 0; i < corpus_histo.size(); i++) {
+    size_t doc_length = data[i].size();
+    for (size_t j = 0; j < vocab_vec.size(); j++) {
+      string term = vocab_vec[j];
+      int x = 0;
+      auto it = corpus_histo[i].find(term);
+      if (it != corpus_histo[i].end()) {
+        x = it->second;
+      }
+      double idf = log(static_cast<double>(len_data) / idfs[term]);
+      double term_freq = static_cast<double>(x) / doc_length;
+      matrix[i][j] = idf * term_freq;
+    }
+  }
+  return matrix;
 }
-
-
-vector<unordered_map<string, vector<double>>> get_tf_idf(vector<unordered_map<string, vector<string>>> corpus) {
-
-  set<string> vocab_set = get_vocab(corpus); // a set of all terms in corpus (a vocabulary)
-  vector<string> vocab(vocab_set.begin(), vocab_set.end()); // converted to a vector
-  int vocab_len = vocab.size(); // used to build a vector of 0s
-  unordered_map<string , double> term_idfs; // track the idf for all terms in vocab
-  for (const string& term : vocab) {
-    term_idfs[term] = idf(term, corpus); // store the term and its idf
-  }
-  // second part
-  vector<unordered_map<string, vector<double>>> results;
-  for (const unordered_map<string, vector<string>>& doc : corpus) { // for every doc in corpus
-    unordered_map<string, int> term_freq; // to store tf 
-    vector<double> vec(vocab_len, 0.0); // a vector intialized to 0 * length of vocab
-    for (const auto& pair : doc){ // for every key, value pair in each document
-      string label = pair.first; // our label is the key
-      for (const string& term : pair.second) {
-        term_freq[term] = tf(term, pair.second); // store term and its tf for that document
-    }
-    
-    for (int i = 0; i < vocab_len; i++){
-      string term = vocab[i]; // get the ith term in the vocab
-      vec[i] = term_freq[term] * term_idfs[term]; // update ith item in vector with the tf-idf of the ith term
-    }
-    unordered_map<string, vector<double>> res;
-    res[label] = vec;
-    results.push_back(res);
-  }
-  }
-    return results;
-  }

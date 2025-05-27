@@ -15,6 +15,6 @@ typedef vector<unordered_map<string, string>> str_omap_vector_t;
  * @param filename The full path name of the csv file
  * @return a vector of maps (string vector<string>)
 */
-str_omap_vector_t read_csv(const string& filename);
-
+ vector<vector<string>> read_csv(const string& filename);
+void display_csv(const vector<vector<string>>& data);
 #endif // READING_H

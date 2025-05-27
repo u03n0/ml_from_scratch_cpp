@@ -13,9 +13,8 @@ using std::vector;
 using std::set;
 
 
-double tf(string term, unordered_map<string, vector<string>> document); 
-double idf(string term, vector<unordered_map<string, vector<string>>> corpus); 
-set<string> get_vocab( vector<unordered_map<string, vector<string>>> corpus);
-vector<unordered_map<string, vector<double>>> get_tf_idf(vector<unordered_map<string, vector<string>>> corpus); 
+
+vector<vector<double>> tf_idf(vector<vector<string>> data);
+
 #endif // !TEXT_TERMS_H
 

@@ -12,27 +12,27 @@ using std::vector;
 using std::unordered_map;
 using std::string;
 
-typedef vector<unordered_map<string, string>> str_omap_vector_t;
-typedef vector<unordered_map<string, vector<string>>> dataset_vec_str_t;
-typedef vector<unordered_map<string, vector<double>>> dataset_vec_double_t;
 
 int main() {
+  // Read and load dataset from csv
+  string filename = string(DATA_DIR) + "email.csv";
+  vector<vector<string>> data;
+  data = read_csv(filename);
+  // Split data into X and y
+  auto [X, y] =  split_x_y(data, "Category");
+  // Tokenize
+  vector<vector<string>> X_processed = tokenize_dataset(X);
+  X_processed.erase(X_processed.begin());
+  auto [X_train, y_train, X_test, y_test] = train_test_split(X_processed, y, 0.8);
 
- string filename = string(DATA_DIR) + "email.csv";
- str_omap_vector_t data;
- data = read_csv(filename);
- dataset_vec_str_t processed = tokenize_dataset(data);
+  vector<vector<double>> X_encoded_train, X_encoded_test;
 
+  X_encoded_train = tf_idf(X_train);
+  X_encoded_test = tf_idf(X_test);
 
- dataset_vec_double_t encoded_data;
- encoded_data = get_tf_idf(processed);
-
- auto [train_data, test_data] = train_test_split(encoded_data, 0.8);
-
- KNN knn;
- knn.fit(train_data);
- int correct {knn.predict(test_data)};
- std::cout << "Accuracy: " << (double) correct / test_data.size() << "%" << std::endl;
- 
+  KNN knn;
+  knn.fit(X_encoded_train, y_train);
+  int correct {knn.predict(X_encoded_test, y_test)};
+  std::cout << "Accuracy: " << (double) correct / X_encoded_test.size() << "%" << std::endl;
   return 0;
 } 

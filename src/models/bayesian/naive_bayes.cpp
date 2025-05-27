@@ -9,20 +9,21 @@ NaiveBayes::NaiveBayes(int a) {
       alpha = a;
       len_ham = 0;
       correct = 0;
+      
     }
     
-    void NaiveBayes::fit(dataset_vec_str_t x) {
-      train_data = x;
-      for (const auto& dict : train_data) {
-        if (dict.find("ham") != dict.end()) {
+    void NaiveBayes::fit(vector<vector<string>> X, vector<string> y) {
+      size_t num_rows = X.size();
+      for (size_t i = 0; i < num_rows; i++) {
+        if (y[i] == "ham") {
           len_ham++;
-          ham_data.push_back({{"ham", dict.at("ham")}});
-        }
-        if (dict.find("spam") != dict.end()) {
-          spam_data.push_back({{"spam", dict.at("spam")}});
+          ham_data.push_back(X[i]);
+        }else {
+          spam_data.push_back(X[i]);
         }
       }
-      ham_proba = static_cast<double>(len_ham) / train_data.size();
+
+      ham_proba = static_cast<double>(len_ham) / num_rows;
       spam_proba  = 1.0 - ham_proba;
       ham_histogram = build_histogram(ham_data);
       spam_histogram = build_histogram(spam_data);
@@ -30,15 +31,13 @@ NaiveBayes::NaiveBayes(int a) {
       num_spam_words = vocabulary_counter(spam_histogram);
     }
 
-    int NaiveBayes::predict(dataset_vec_str_t x) { 
-      test_data = x;
-      for (const auto& email : test_data) {
-        for (const auto& pair : email) {
-          y.push_back(pair.first);
-          product_ham = compute_product(pair.second, ham_histogram, num_ham_words, ham_proba, alpha);
-          product_spam = compute_product(pair.second, spam_histogram, num_spam_words, spam_proba, alpha);
-          y_hat.push_back(product_spam > product_ham ? "spam" : "ham");
-        }
+    int NaiveBayes::predict(vector<vector<string>> X, vector<string> y) { 
+
+      for (size_t i = 0; i < X.size(); i++) {
+        vector<string> row = X[i];
+        product_ham = compute_product(row, ham_histogram, num_ham_words, ham_proba, alpha);
+        product_spam = compute_product(row, spam_histogram, num_spam_words, spam_proba, alpha);
+        y_hat.push_back(product_spam > product_ham ? "spam" : "ham");
       }
       for (size_t i {0}; i < y_hat.size(); i++) {
         if (y_hat[i] == y[i]) {
@@ -48,17 +47,14 @@ NaiveBayes::NaiveBayes(int a) {
       return correct;
     }
     
-    unordered_map<string, int> NaiveBayes::build_histogram(dataset_vec_str_t x) {
-      dataset_vec_str_t data {x};
+    unordered_map<string, int> NaiveBayes::build_histogram(vector<vector<string>> X) {
+    
       unordered_map<string, int> histogram_map;
-      for (unordered_map<string, vector<string>> dict : data) {
-        for (const auto& entry : dict) {
-          const vector<string>& value = entry.second;
-          for (const auto& word : value) {
+      for (vector<string>& row : X) {
+        for (const auto& word : row) {
             histogram_map[word]++;
           }
         }
-      }
   return histogram_map;
 }
     int NaiveBayes::vocabulary_counter(unordered_map<string, int> x) {
