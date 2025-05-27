@@ -22,4 +22,4 @@ The name says it all.
 | --- | --- | --- | --- |
 | KNN | ✅ | knn_app | `./src/knn_app`| 
 | NaiveBayes |:white_check_mark:| naive_bayes_app | `./src/naive_bayes_app`|
-| LinearRegression | 📆: |
+| LinearRegression | ✅ | lr_app | `./src/lr_app` |
