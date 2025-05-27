@@ -13,8 +13,8 @@ using std::vector;
 using std::set;
 
 
-set<string> get_vocab( vector<unordered_map<string, vector<string>>> corpus);
-vector<vector<double>> get_tf_idf_optimized(const vector<vector<string>>& corpus);
-vector<vector<double>> get_bag_of_words(const vector<vector<string>>& corpus);
+
+vector<vector<double>> tf_idf(vector<vector<string>> data);
+
 #endif // !TEXT_TERMS_H
 

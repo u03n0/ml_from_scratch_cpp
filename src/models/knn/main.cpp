@@ -22,15 +22,17 @@ int main() {
   auto [X, y] =  split_x_y(data, "Category");
   // Tokenize
   vector<vector<string>> X_processed = tokenize_dataset(X);
-
+  X_processed.erase(X_processed.begin());
   auto [X_train, y_train, X_test, y_test] = train_test_split(X_processed, y, 0.8);
 
   vector<vector<double>> X_encoded_train, X_encoded_test;
-  X_encoded_train = get_tf_idf_optimized(X_train);
-  X_encoded_test = get_tf_idf_optimized(X_test);
+
+  X_encoded_train = tf_idf(X_train);
+  X_encoded_test = tf_idf(X_test);
+
   KNN knn;
   knn.fit(X_encoded_train, y_train);
   int correct {knn.predict(X_encoded_test, y_test)};
-  std::cout << "Accuracy: " << (double) correct / X_test.size() << "%" << std::endl;
+  std::cout << "Accuracy: " << (double) correct / X_encoded_test.size() << "%" << std::endl;
   return 0;
 } 
