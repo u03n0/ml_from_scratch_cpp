@@ -4,6 +4,8 @@ add_library(core_data
     core/data/text.cpp
     core/encoding/text_terms.cpp
     core/encoding/features.cpp
+    core/metrics/linear_metrics.cpp
+    core/feature/manipulation.cpp
 )
 
 # Define the bayesian models library
