@@ -20,6 +20,7 @@ int main() {
   // Tokenize (split into individual words) X
   vector<vector<string>> X_processed = tokenize_dataset(X);
   // Make a train test split on both X and y
+  X_processed.erase(X_processed.begin());
   auto[X_train, y_train, X_test, y_test] = train_test_split(X_processed, y, 0.8);
   // Instantiate the NaiveBayes model, fit and predict
   NaiveBayes nb;
