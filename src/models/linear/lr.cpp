@@ -11,25 +11,7 @@ typedef vector<unordered_map<string, vector<double>>> dataset_vec_double_t;
 
 LinearRegression::LinearRegression(double x, int y)
   : lr(x), num_iters(y), bias(0.0) {}
-/*
-void LinearRegression::extractFeaturesAndLabels(const dataset_vec_double_t& dataset, 
-                                  vector<vector<double>>& X, 
-                                  vector<double>& y) {
-        X.clear();
-        y.clear();
-        
-        for (const auto& sample : dataset) {
-            for (const auto& [label, features] : sample) {
-                X.push_back(features);
-                
-                // Convert label to numeric
-                // Assuming binary classification: "spam" = 1.0, "ham" = 0.0
-                double label_value = (label == "spam") ? 1.0 : 0.0;
-                y.push_back(label_value);
-            }
-        }
-    }
-*/ 
+
 void LinearRegression::fit(vector<vector<double>>& X, vector<double>& y){
 
   // Convert dataset to X (features) and y (labels)
